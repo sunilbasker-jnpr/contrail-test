@@ -416,18 +416,18 @@ class AnalyticsTestSanityWithResource(
                 connections=self.connections))
         vn1_fixture = self.res.vn1_fixture
         vn1_fixture.bind_policies(
-            [policy1_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy1_fixture.policy_fq_name], vn1_fixture.uuid)
         self.addCleanup(
-            vn1_fixture.unbind_policies, vn1_fixture.vn_id, [
+            vn1_fixture.unbind_policies, vn1_fixture.uuid, [
                 policy1_fixture.policy_fq_name])
 
         assert vn1_fixture.verify_on_setup()
         vn2_fixture = self.res.vn2_fixture
         vn2_fixture.bind_policies(
-            [policy2_fixture.policy_fq_name], vn2_fixture.vn_id)
+            [policy2_fixture.policy_fq_name], vn2_fixture.uuid)
         assert vn2_fixture.verify_on_setup()
         self.addCleanup(
-            vn2_fixture.unbind_policies, vn2_fixture.vn_id, [
+            vn2_fixture.unbind_policies, vn2_fixture.uuid, [
                 policy2_fixture.policy_fq_name])
 #        self.res.verify_common_objects()
         self.logger.info(
@@ -610,18 +610,18 @@ class AnalyticsTestSanityWithResource(
                 connections=self.connections))
         vn1_fixture = self.res.vn1_fixture
         vn1_fixture.bind_policies(
-            [policy1_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy1_fixture.policy_fq_name], vn1_fixture.uuid)
         self.addCleanup(
-            vn1_fixture.unbind_policies, vn1_fixture.vn_id, [
+            vn1_fixture.unbind_policies, vn1_fixture.uuid, [
                 policy1_fixture.policy_fq_name])
 
         assert vn1_fixture.verify_on_setup()
         vn2_fixture = self.res.vn2_fixture
         vn2_fixture.bind_policies(
-            [policy2_fixture.policy_fq_name], vn2_fixture.vn_id)
+            [policy2_fixture.policy_fq_name], vn2_fixture.uuid)
         assert vn2_fixture.verify_on_setup()
         self.addCleanup(
-            vn2_fixture.unbind_policies, vn2_fixture.vn_id, [
+            vn2_fixture.unbind_policies, vn2_fixture.uuid, [
                 policy2_fixture.policy_fq_name])
 #        self.res.verify_common_objects()
         # start_time=self.analytics_obj.getstarttime(self.tx_vm_node_ip)
@@ -915,18 +915,18 @@ class AnalyticsTestSanityWithResource(
                 connections=self.connections))
         vn1_fixture = self.res.vn1_fixture
         vn1_fixture.bind_policies(
-            [policy1_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy1_fixture.policy_fq_name], vn1_fixture.uuid)
         self.addCleanup(
-            vn1_fixture.unbind_policies, vn1_fixture.vn_id, [
+            vn1_fixture.unbind_policies, vn1_fixture.uuid, [
                 policy1_fixture.policy_fq_name])
 
         assert vn1_fixture.verify_on_setup()
         vn2_fixture = self.res.vn2_fixture
         vn2_fixture.bind_policies(
-            [policy2_fixture.policy_fq_name], vn2_fixture.vn_id)
+            [policy2_fixture.policy_fq_name], vn2_fixture.uuid)
         assert vn2_fixture.verify_on_setup()
         self.addCleanup(
-            vn2_fixture.unbind_policies, vn2_fixture.vn_id, [
+            vn2_fixture.unbind_policies, vn2_fixture.uuid, [
                 policy2_fixture.policy_fq_name])
 #        self.res.verify_common_objects()
         # installing traffic package in vm

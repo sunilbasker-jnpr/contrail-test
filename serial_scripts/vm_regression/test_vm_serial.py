@@ -408,15 +408,15 @@ class TestBasicVMVN0(BaseVnVmTest):
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets, option='contrail')
         assert vn1_fixture.verify_on_setup()
         vn1_fixture.bind_policies(
-            [policy1_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy1_fixture.policy_fq_name], vn1_fixture.uuid)
         self.addCleanup(vn1_fixture.unbind_policies,
-                        vn1_fixture.vn_id, [policy1_fixture.policy_fq_name])
+                        vn1_fixture.uuid, [policy1_fixture.policy_fq_name])
         vn2_fixture = self.create_vn(vn2_name, vn2_subnets, option='contrail')
         assert vn2_fixture.verify_on_setup()
         vn2_fixture.bind_policies(
-            [policy2_fixture.policy_fq_name], vn2_fixture.vn_id)
+            [policy2_fixture.policy_fq_name], vn2_fixture.uuid)
         self.addCleanup(vn2_fixture.unbind_policies,
-                        vn2_fixture.vn_id, [policy2_fixture.policy_fq_name])
+                        vn2_fixture.uuid, [policy2_fixture.policy_fq_name])
         vn1_vm1_name = get_random_name('vn1_vm1')
         vn2_vm1_name = get_random_name('vn2_vm1')
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name)
@@ -787,13 +787,13 @@ class TestBasicVMVN0(BaseVnVmTest):
                 connections=self.connections))
 
         vn1_fixture.bind_policies(
-            [policy1_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy1_fixture.policy_fq_name], vn1_fixture.uuid)
         self.addCleanup(vn1_fixture.unbind_policies,
-                        vn1_fixture.vn_id, [policy1_fixture.policy_fq_name])
+                        vn1_fixture.uuid, [policy1_fixture.policy_fq_name])
         vn2_fixture.bind_policies(
-            [policy2_fixture.policy_fq_name], vn2_fixture.vn_id)
+            [policy2_fixture.policy_fq_name], vn2_fixture.uuid)
         self.addCleanup(vn2_fixture.unbind_policies,
-                        vn2_fixture.vn_id, [policy2_fixture.policy_fq_name])
+                        vn2_fixture.uuid, [policy2_fixture.policy_fq_name])
 
         # Launch 2 VM's in the respective VN's.
         vm1_fixture = self.create_vm(vn1_fixture,vm_name=vn1_vm1_name,

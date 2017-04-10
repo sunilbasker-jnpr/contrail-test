@@ -1568,7 +1568,7 @@ class TestECMP(testtools.TestCase, ResourcedTestCase, fixtures.TestWithFixtures)
         fvn_fq_name = fvn.vn_fq_name
         fvn_vrf_name = fvn.vrf_name
         vn1_vrf_name = vn1.vrf_name
-        fvn_id = fvn.vn_id
+        fvn_id = fvn.uuid
         vm1_id = vm1.vm_id
         vm2_id = vm2.vm_id
         fvn_ri_name = fvn.ri_name

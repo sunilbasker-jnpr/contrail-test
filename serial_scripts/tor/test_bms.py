@@ -56,7 +56,7 @@ class TestTor(BaseTorTest):
                           }])
              ]
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      mac_address=vm_mac)
         vm1_fixture = self.create_vm(vn1_fixture, port_ids=[port1_obj['id']])
         self.setup_tor_port(self.tor1_fixture, port_index=0, 

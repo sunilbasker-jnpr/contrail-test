@@ -112,7 +112,7 @@ class BaseResource(fixtures.Fixture):
                         (self.inputs.project_name)
 
         fip_id = self.public_vn_obj.fip_fixture.create_and_assoc_fip(
-            self.public_vn_obj.public_vn_fixture.vn_id, self.vm1_fixture.vm_id, project_obj)
+            self.public_vn_obj.public_vn_fixture.uuid, self.vm1_fixture.vm_id, project_obj)
         self.addCleanup(self.public_vn_obj.fip_fixture.disassoc_and_delete_fip, fip_id)
 
         assert self.public_vn_obj.fip_fixture.verify_fip(fip_id, self.vm1_fixture,

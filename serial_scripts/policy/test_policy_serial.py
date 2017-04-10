@@ -558,10 +558,10 @@ class TestSerialPolicy(BaseSerialPolicyTest):
         self.logger.info("Bind the new policy to VN's..")
         policy_fq_name1 = [policy3_fixture.policy_fq_name]
         policy_fq_name2 = [policy4_fixture.policy_fq_name]
-        vn1_fixture.bind_policies(policy_fq_name1, vn1_fixture.vn_id)
+        vn1_fixture.bind_policies(policy_fq_name1, vn1_fixture.uuid)
         time.sleep(5)
         # bind the new policy to VN2
-        vn2_fixture.bind_policies(policy_fq_name2, vn2_fixture.vn_id)
+        vn2_fixture.bind_policies(policy_fq_name2, vn2_fixture.uuid)
         time.sleep(5)
 
         # policy deny applied traffic should fail
@@ -1075,7 +1075,7 @@ class TestSerialPolicy(BaseSerialPolicyTest):
         test_vn = topo.vn_of_vm[
             test_vm1]
         test_vn_fix = config_topo['vn'][test_vn]
-        test_vn_id = test_vn_fix.vn_id
+        test_vn_id = test_vn_fix.uuid
         test_vn_vm1 = topo.vn_of_vm[
             test_vm1]
         test_vn_vm1_fix = config_topo['vn'][test_vn_vm1]
@@ -1507,7 +1507,7 @@ class TestSerialPolicy(BaseSerialPolicyTest):
         test_vm2_fixture = config_topo['vm'][test_vm2]
         test_vm3_fixture = config_topo['vm'][test_vm3]
         test_vn_fix = config_topo['vn'][test_vn]
-        test_vn_id = test_vn_fix.vn_id
+        test_vn_id = test_vn_fix.uuid
         dest_vn_vm_dict = {topo.vn_of_vm[test_vm2]: test_vm2_fixture,
                            topo.vn_of_vm[test_vm3]: test_vm3_fixture}
         # 2. set expectation to verify..
@@ -2234,7 +2234,7 @@ class TestSerialPolicy(BaseSerialPolicyTest):
         test_vm = topo.vmc_list[0]  # 'vmc0'
         test_vn = topo.vn_of_vm[test_vm]  # 'vnet0'
         test_vn_fix = config_topo['vn'][test_vn]
-        test_vn_id = test_vn_fix.vn_id
+        test_vn_id = test_vn_fix.uuid
         for policy in topo.policy_test_order:
             # 2. set new policy for test_vn to policy
             test_policy_fq_names = []
@@ -2357,17 +2357,17 @@ class TestSerialPolicy(BaseSerialPolicyTest):
                 connections=self.connections))
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets)
         vn1_fixture.bind_policies(
-            [policy_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy_fixture.policy_fq_name], vn1_fixture.uuid)
         vn2_fixture = self.create_vn(vn2_name, vn2_subnets)
         vn2_fixture.bind_policies(
-            [policy_fixture.policy_fq_name], vn2_fixture.vn_id)
+            [policy_fixture.policy_fq_name], vn2_fixture.uuid)
 
         self.addCleanup(vn1_fixture.unbind_policies,
-                        vn1_fixture.vn_id, [policy_fixture.policy_fq_name])
+                        vn1_fixture.uuid, [policy_fixture.policy_fq_name])
         assert vn1_fixture.verify_on_setup()
 
         self.addCleanup(vn2_fixture.unbind_policies,
-                        vn2_fixture.vn_id, [policy_fixture.policy_fq_name])
+                        vn2_fixture.uuid, [policy_fixture.policy_fq_name])
         assert vn2_fixture.verify_on_setup()
 
         vn1_vm1_name = get_random_name('vn1_vm1')

@@ -71,7 +71,7 @@ class TestLBaaSV2(BaseLBaaSTest):
         listener_name = get_random_name('HTTP')
 
         #Call LB fixutre to create LBaaS VIP, Listener, POOL , Member and associate a Health monitor to the pool
-        lb = self.create_lbaas(vip_name, vn_vip_fixture.get_uuid(),
+        lb = self.create_lbaas(vip_name, vn_vip_fixture.uuid,
               pool_name=pool_name, pool_algorithm=lb_method, pool_protocol=protocol,
               pool_port=HTTP_PORT, members=pool_members, listener_name=listener_name,
               fip_net_id=fip_fix.uuid, vip_port=HTTP_PORT, vip_protocol='HTTP',
@@ -124,7 +124,7 @@ class TestLBaaSV2(BaseLBaaSTest):
         vip_name = get_random_name('myvip')
         listener_name = get_random_name('HTTP')
 
-        http_listener = self.create_lbaas(vip_name, vn_vip_fixture.get_uuid(),
+        http_listener = self.create_lbaas(vip_name, vn_vip_fixture.uuid,
               pool_name=pool_name, pool_algorithm=lb_method, pool_protocol=protocol,
               pool_port=HTTP_PORT, members=pool_members, listener_name=listener_name,
               fip_net_id=fip_fix.uuid, vip_port=HTTP_PORT, vip_protocol='HTTP',
@@ -132,7 +132,7 @@ class TestLBaaSV2(BaseLBaaSTest):
 
         http_listener.verify_on_setup()
 
-        tcp_listener = self.create_lbaas(vip_name, vn_vip_fixture.get_uuid(),
+        tcp_listener = self.create_lbaas(vip_name, vn_vip_fixture.uuid,
               pool_name=pool_name, pool_algorithm=lb_method, pool_protocol='TCP',
               pool_port=TCP_PORT, members=pool_members, listener_name=get_random_name('TCP'),
               fip_net_id=fip_fix.uuid, vip_port=TCP_PORT, vip_protocol='TCP',
@@ -140,7 +140,7 @@ class TestLBaaSV2(BaseLBaaSTest):
 
         tcp_listener.verify_on_setup()
 
-        https_listener = self.create_lbaas(vip_name, vn_vip_fixture.get_uuid(),
+        https_listener = self.create_lbaas(vip_name, vn_vip_fixture.uuid,
               pool_name=pool_name, pool_algorithm=lb_method, pool_protocol='HTTPS',
               pool_port=HTTPS_PORT, members=pool_members, listener_name=get_random_name('HTTPS'),
               fip_net_id=fip_fix.uuid, vip_port=HTTPS_PORT, vip_protocol='HTTPS',

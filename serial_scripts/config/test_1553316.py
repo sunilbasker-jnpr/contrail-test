@@ -1,7 +1,6 @@
 import test_v1
 import unittest
 from tcutils.wrappers import preposttest_wrapper
-from vn_test import MultipleVNFixture
 from physical_router_fixture import PhysicalRouterFixture
 from common import isolated_creds
 from common.neutron.base import BaseNeutronTest 

@@ -317,7 +317,7 @@ class SimpleTCPFlowEvictionTests(ExtendedFlowTestsBase):
                     proto='tcp',
                     source_port=sport,
                     dest_port=dport,
-                    vrf_id=compute.get_vrf_id(self.vn1_fixture.vn_fq_name)
+                    vrf_id=compute.get_vrf_id(self.vn1_fixture.fq_name_str)
                 )
                 assert flow_entry is None, ('Flow not evicted ater tcp close.',
                                             ' Flow : %s' % (flow_entry.dump))
@@ -402,7 +402,7 @@ class TCPFlowEvictionTests(ExtendedFlowTestsBase):
                 source_port=sport,
                 dest_port=dport,
                 vrf_id=self.vn1_vm1_vrouter_fixture.get_vrf_id(
-                    self.vn1_fixture.vn_fq_name)
+                    self.vn1_fixture.fq_name_str)
             )
             if not f_flow_index:
                 f_flow_index = flow_entry.index
@@ -453,7 +453,7 @@ class TCPFlowEvictionTests(ExtendedFlowTestsBase):
             source_port=sport,
             dest_port=dport,
             vrf_id=self.vn1_vm1_vrouter_fixture.get_vrf_id(
-                self.vn1_fixture.vn_fq_name))
+                self.vn1_fixture.fq_name_str))
 
         assert flow_entry is None, ('Flow not evicted ater tcp close. Flow: ',
                                     '%s' % (flow_entry.dump))
@@ -506,7 +506,7 @@ class TCPFlowEvictionTests(ExtendedFlowTestsBase):
                 proto='tcp',
                 dest_port='22',
                 vrf_id=self.vn1_vm1_vrouter_fixture.get_vrf_id(
-                          self.vn1_fixture.vn_fq_name)
+                          self.vn1_fixture.fq_name_str)
             )
             if ff_count or rf_count:
                 self.logger.debug('Flow table : %s' % (flow_table.get_as_table))
@@ -585,10 +585,10 @@ send(a, count=10000, inter=0, iface='eth0')
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
         self.add_vn_to_router(router_dict['id'], vn2_fixture)
         self.quantum_h.router_gateway_set(router_dict['id'],
-                                          public_vn.vn_id)
+                                          public_vn.uuid)
 
         ip = vn2_fixture.get_an_ip(index=3)
-        vm2_port = self.setup_vmi(vn2_fixture.vn_id,
+        vm2_port = self.setup_vmi(vn2_fixture.uuid,
                                   fixed_ips=[{'ip_address':ip}])
         # Run ping
         ping_h = self.start_ping(vm1_fixture, dst_ip=ip)
@@ -599,12 +599,12 @@ send(a, count=10000, inter=0, iface='eth0')
             source_ip=vm1_fixture.vm_ip,
             dest_ip=ip,
             proto='icmp',
-            vrf_id=compute_fixture.get_vrf_id(vn1_fixture.vn_fq_name)
+            vrf_id=compute_fixture.get_vrf_id(vn1_fixture.fq_name_str)
         )
         assert flow_entry, 'Expected flow not seen'
         # Boot a VM  with that IP now
         vm2_fixture = self.create_vm(port_ids=[vm2_port.uuid],
-                                     vn_ids=[vn2_fixture.vn_id],
+                                     vn_ids=[vn2_fixture.uuid],
                                      image_name=CIRROS_IMAGE_NAME)
         vm2_fixture.wait_till_vm_is_up()
 

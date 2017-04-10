@@ -276,8 +276,8 @@ class FatFlow(BaseVrouterTest, BaseLBaaSTest):
         vIP = self.get_random_ip_from_vn(vn1_fixture)[0]
         image = 'ubuntu-traffic'
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vm1_name,
                                      image_name=image,
                                      port_ids=[port1_obj['id']],
@@ -395,7 +395,7 @@ class FatFlow(BaseVrouterTest, BaseLBaaSTest):
             vm.start_webserver(listen_port=port)
 
         #Call LB fixutre to create LBaaS VIP, Listener, POOL and Members
-        lb = self.create_lbaas(vip_name, vn_vip_fixture.get_uuid(),
+        lb = self.create_lbaas(vip_name, vn_vip_fixture.uuid,
               pool_name=pool_name, pool_algorithm=lb_method, pool_protocol=protocol,
               pool_port=port, members=pool_members, listener_name=listener_name,
               vip_port=port, vip_protocol=protocol)

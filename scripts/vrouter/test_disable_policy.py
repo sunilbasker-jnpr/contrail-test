@@ -149,8 +149,8 @@ class DisablePolicyEcmp(BaseVrouterTest):
         vIP = self.get_random_ip_from_vn(vn1_fixture)[0]
         image = 'ubuntu-traffic'
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vm1_name,
                                      image_name=image,
                                      port_ids=[port1_obj['id']])

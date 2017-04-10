@@ -88,7 +88,7 @@ class TestDetailedPolicy1(BasePolicyTest):
         test_vm2_fixture = config_topo['vm'][test_vm2]
         test_vn = topo.vn_of_vm[test_vm1]  # 'vnet0'
         test_vn_fix = config_topo['vn'][test_vn]
-        test_vn_id = test_vn_fix.vn_id
+        test_vn_id = test_vn_fix.uuid
         test_proto = 'icmp'
         for policy in topo.policy_test_order:
             # 2. set new policy for test_vn to policy
@@ -293,7 +293,7 @@ class TestDetailedPolicy3(BasePolicyTest):
         test_vm1_fixture = config_topo['vm'][test_vm1]
         test_vn = topo.vn_of_vm[test_vm1]  # 'vnet0'
         test_vn_fix = config_topo['vn'][test_vn]
-        test_vn_id = test_vn_fix.vn_id
+        test_vn_id = test_vn_fix.uuid
         test_proto = 'icmp'
         # Assumption: one policy per VN
         policy = topo.vn_policy[test_vn][0]

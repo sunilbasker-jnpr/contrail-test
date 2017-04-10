@@ -529,11 +529,11 @@ class TestECMPwithFIP_1(ECMPTestBase, VerifySvcFirewall, ECMPSolnSetup, ECMPTraf
         fip_fixture = self.useFixture(
             FloatingIPFixture(
                 project_name=self.inputs.project_name, inputs=self.inputs,
-                connections=self.connections, pool_name='some-pool1', vn_id=self.left_vn_fixture.vn_id))
+                connections=self.connections, pool_name='some-pool1', vn_id=self.left_vn_fixture.uuid))
         assert fip_fixture.verify_on_setup()
 
         fvn_obj = self.vnc_lib.virtual_network_read(
-            id=self.left_vn_fixture.vn_id)
+            id=self.left_vn_fixture.uuid)
         fip_pool_obj = FloatingIpPool('some-pool1', fvn_obj)
         fip_obj = FloatingIp('fip', fip_pool_obj, my_fip, True)
 

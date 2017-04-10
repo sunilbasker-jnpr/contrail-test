@@ -167,8 +167,8 @@ class TestRouters(BaseNeutronTest):
         assert vn1_vm1_fixture.ping_with_certainty(vn2_vm1_fixture.vm_ip,
                                                    expectation=False)
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
-        port2_obj = self.create_port(net_id=vn2_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
+        port2_obj = self.create_port(net_id=vn2_fixture.uuid)
         router_dict = self.create_router(router_name)
         self.add_router_interface(router_dict['id'], port_id=port1_obj['id'])
         self.add_router_interface(router_dict['id'], port_id=port2_obj['id'])
@@ -271,7 +271,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                self.public_vn_obj.public_vn_fixture.vn_id)
+                self.public_vn_obj.public_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
         assert self.verify_snat(vm1_fixture)
 
@@ -295,7 +295,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                self.public_vn_obj.public_vn_fixture.vn_id)
+                self.public_vn_obj.public_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
         assert self.verify_snat(vm1_fixture)
         assert self.verify_snat_with_fip(self.public_vn_obj, \
@@ -377,7 +377,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name, neutron_handle=neutron_h1)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                self.public_vn_obj.public_vn_fixture.vn_id)
+                self.public_vn_obj.public_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
 
         assert self.verify_snat(vm1_fixture)
@@ -386,7 +386,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name, neutron_handle=neutron_h)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                self.public_vn_obj.public_vn_fixture.vn_id)
+                self.public_vn_obj.public_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn2_fixture)
      
         assert self.verify_snat(vm2_fixture)
@@ -477,14 +477,14 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name, tenant_id=project_fixture_obj1.uuid)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                self.public_vn_obj.public_vn_fixture.vn_id)
+                self.public_vn_obj.public_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
         assert self.verify_snat(vm1_fixture)
         router_name = get_random_name('router2')
         router_dict = self.create_router(router_name, tenant_id=project_fixture_obj.uuid)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                self.public_vn_obj.public_vn_fixture.vn_id)
+                self.public_vn_obj.public_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn2_fixture)
         assert self.verify_snat(vm2_fixture)
         assert self.verify_snat_with_fip(self.public_vn_obj, vm3_fixture, 
@@ -514,7 +514,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name)
         router_rsp = self.quantum_h.router_gateway_set(
             router_dict['id'],
-            self.public_vn_obj.public_vn_fixture.vn_id)
+            self.public_vn_obj.public_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
         assert self.verify_snat(vm1_fixture)
         assert self.verify_snat_with_fip(self.public_vn_obj, 
@@ -564,7 +564,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name)
         router_rsp = self.quantum_h.router_gateway_set(
             router_dict['id'],
-            self.public_vn_obj.public_vn_fixture.vn_id)
+            self.public_vn_obj.public_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
         self.add_vn_to_router(router_dict['id'], vn2_fixture)
         assert self.verify_snat(vm1_fixture), "snat verification failed"
@@ -587,7 +587,7 @@ class TestRouterSNAT(BaseNeutronTest):
         result = True
         assert fip_fixture.verify_on_setup()
         fip_id = fip_fixture.create_and_assoc_fip(
-                ext_vn_fixture.vn_id, vm_fixture.vm_id)
+                ext_vn_fixture.uuid, vm_fixture.vm_id)
         fip = vm_fixture.vnc_lib_h.floating_ip_read(
             id=fip_id).get_floating_ip_address()
 

@@ -89,7 +89,7 @@ class TestSanity_MX(base.FloatingIpBaseTest):
                         (self.inputs.project_name)
 
         fip_id = self.public_vn_obj.fip_fixture.create_and_assoc_fip(
-            self.public_vn_obj.public_vn_fixture.vn_id, vm1_fixture.vm_id, project_obj)
+            self.public_vn_obj.public_vn_fixture.uuid, vm1_fixture.vm_id, project_obj)
         self.addCleanup(self.public_vn_obj.fip_fixture.disassoc_and_delete_fip, fip_id)
 
         assert self.public_vn_obj.fip_fixture.verify_fip(fip_id, vm1_fixture, 
@@ -185,7 +185,7 @@ class TestSanity_MX(base.FloatingIpBaseTest):
                         (self.inputs.project_name)
 
         fip_id = self.public_vn_obj.fip_fixture.create_and_assoc_fip(
-            self.public_vn_obj.public_vn_fixture.vn_id, vm1_fixture.vm_id, project_obj)
+            self.public_vn_obj.public_vn_fixture.uuid, vm1_fixture.vm_id, project_obj)
 
         self.addCleanup(self.public_vn_obj.fip_fixture.disassoc_and_delete_fip, fip_id)
         assert self.public_vn_obj.fip_fixture.verify_fip(fip_id, vm1_fixture, 
@@ -229,14 +229,14 @@ class TestSanity_MX(base.FloatingIpBaseTest):
         self.logger.info('Apply policy between VN %s and %s' %
                          (vn1_name, vn2_name))
         vn1_fixture.bind_policies(
-            [policy1_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy1_fixture.policy_fq_name], vn1_fixture.uuid)
         self.addCleanup(
-            vn1_fixture.unbind_policies, vn1_fixture.vn_id, [
+            vn1_fixture.unbind_policies, vn1_fixture.uuid, [
                 policy1_fixture.policy_fq_name])
         vn2_fixture.bind_policies(
-            [policy2_fixture.policy_fq_name], vn2_fixture.vn_id)
+            [policy2_fixture.policy_fq_name], vn2_fixture.uuid)
         self.addCleanup(
-            vn2_fixture.unbind_policies, vn2_fixture.vn_id, [
+            vn2_fixture.unbind_policies, vn2_fixture.uuid, [
                 policy2_fixture.policy_fq_name])
      
         vm1_fixture.wait_till_vm_up()
@@ -304,7 +304,7 @@ class TestSanity_MX(base.FloatingIpBaseTest):
                         (self.inputs.project_name)
 
         fip_id = self.public_vn_obj.fip_fixture.create_and_assoc_fip(
-            self.public_vn_obj.public_vn_fixture.vn_id, vm1_fixture.vm_id,project_obj)
+            self.public_vn_obj.public_vn_fixture.uuid, vm1_fixture.vm_id,project_obj)
 
         assert self.public_vn_obj.fip_fixture.verify_fip(fip_id, \
                 vm1_fixture, self.public_vn_obj.public_vn_fixture)
@@ -513,10 +513,10 @@ class TestSanity_MX(base.FloatingIpBaseTest):
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_name,
-                vn_id=self.public_vn_obj.public_vn_fixture.vn_id))
+                vn_id=self.public_vn_obj.public_vn_fixture.uuid))
         #assert fip_fixture.verify_on_setup()
         my_fip_name = 'fip'
-        fvn_obj = self.vnc_lib.virtual_network_read(id=self.public_vn_obj.public_vn_fixture.vn_id)
+        fvn_obj = self.vnc_lib.virtual_network_read(id=self.public_vn_obj.public_vn_fixture.uuid)
         fip_pool_obj = FloatingIpPool(fip_pool_name, fvn_obj)
         fip_obj = FloatingIp(my_fip_name, fip_pool_obj, publicip, True)
         vm1_intf = self.vnc_lib.virtual_machine_interface_read(id=vmi1_id)
@@ -538,10 +538,10 @@ class TestSanity_MX(base.FloatingIpBaseTest):
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_internal,
-                vn_id=vn3_fixture.vn_id))
+                vn_id=vn3_fixture.uuid))
         assert fip_fixture1.verify_on_setup()
         my_fip_name1 = 'fip1'
-        vn3_obj = self.vnc_lib.virtual_network_read(id=vn3_fixture.vn_id)
+        vn3_obj = self.vnc_lib.virtual_network_read(id=vn3_fixture.uuid)
         fip_pool_obj1 = FloatingIpPool(fip_pool_internal, vn3_obj)
         fip_obj1 = FloatingIp(my_fip_name1, fip_pool_obj1, '33.1.1.241', True)
         # Read the project obj and set to the floating ip object.

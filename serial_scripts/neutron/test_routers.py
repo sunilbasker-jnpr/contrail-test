@@ -53,7 +53,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                ext_vn_fixture.vn_id)
+                ext_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
     
         assert self.verify_snat(vm1_fixture)
@@ -95,7 +95,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                ext_vn_fixture.vn_id)
+                ext_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
         assert self.verify_snat(vm1_fixture)
         assert self.verify_snat_with_fip(ext_vn_fixture, vm2_fixture, vm1_fixture, connections= self.connections, inputs = self.inputs)
@@ -146,7 +146,7 @@ class TestRouterSNAT(BaseNeutronTest):
         router_dict = self.create_router(router_name)
         router_rsp = self.quantum_h.router_gateway_set(
                 router_dict['id'],
-                ext_vn_fixture.vn_id)
+                ext_vn_fixture.uuid)
         self.add_vn_to_router(router_dict['id'], vn1_fixture)
 
         vm1_fixture = self.useFixture(
@@ -198,10 +198,10 @@ class TestRouterSNAT(BaseNeutronTest):
                 inputs = inputs,
                 connections = connections,
                 pool_name='',
-                vn_id=ext_vn_fixture.vn_id, option='neutron'))
+                vn_id=ext_vn_fixture.uuid, option='neutron'))
         assert fip_fixture.verify_on_setup()
         fip_id = fip_fixture.create_and_assoc_fip(
-                ext_vn_fixture.vn_id, vm_fixture.vm_id)
+                ext_vn_fixture.uuid, vm_fixture.vm_id)
         self.addCleanup(fip_fixture.disassoc_and_delete_fip, fip_id)
         fip = vm_fixture.vnc_lib_h.floating_ip_read(
             id=fip_id).get_floating_ip_address()

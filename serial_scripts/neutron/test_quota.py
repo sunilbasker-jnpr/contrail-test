@@ -219,7 +219,7 @@ class TestQuotaUpdate(BaseNeutronTest):
         response_dict['network'] = vn1_obj
         subnet_cidr = get_random_cidr()
         subnet_rsp = connections.quantum_h.create_subnet(
-            {'cidr': subnet_cidr}, vn_fix.vn_id)
+            {'cidr': subnet_cidr}, vn_fix.uuid)
         response_dict['subnet'] = subnet_rsp
         secgrp_obj = self.create_security_group(
             get_random_name('sec_grp'),
@@ -234,7 +234,7 @@ class TestQuotaUpdate(BaseNeutronTest):
             protocol='tcp')
         response_dict['sg_rule'] = sg_rule_obj
         port_obj = connections.quantum_h.create_port(
-            vn_fix.vn_id)
+            vn_fix.uuid)
         # Cleanup the port incase port-create works
         if port_obj:
             self.addCleanup(connections.quantum_h.delete_port,
@@ -279,7 +279,7 @@ class TestQuotaUpdate(BaseNeutronTest):
         body = {'router:external': 'True'}
         net_dict = {'network': body}
         net_rsp = connections.quantum_h.update_network(
-            fvn_fixture.vn_id,
+            fvn_fixture.uuid,
             net_dict)
         assert net_rsp['network'][
             'router:external'] == True, 'Failed to update router:external to True'
@@ -289,11 +289,11 @@ class TestQuotaUpdate(BaseNeutronTest):
                 inputs=inputs,
                 connections=connections,
                 pool_name='',
-                vn_id=fvn_fixture.vn_id, option='neutron'))
+                vn_id=fvn_fixture.uuid, option='neutron'))
         assert fip_fixture.verify_on_setup()
         if count == 1:
             fip_resp = connections.quantum_h.create_floatingip(
-                fvn_fixture.vn_id,
+                fvn_fixture.uuid,
                 connections.project_id)
             if fip_resp:
                 self.addCleanup(
@@ -301,7 +301,7 @@ class TestQuotaUpdate(BaseNeutronTest):
                     fip_resp['floatingip']['id'])
         else:
             fip_resp = fip_fixture.create_floatingips(
-                fvn_fixture.vn_id,
+                fvn_fixture.uuid,
                 count)
             self.addCleanup(fip_fixture.delete_floatingips, fip_resp)
         return fip_resp
@@ -336,7 +336,7 @@ class TestQuotaUpdate(BaseNeutronTest):
         for vn_fix in vn_fix_list:
             for i in range(count):
                 port_obj = connections.quantum_h.create_port(
-                    vn_fix.vn_id)
+                    vn_fix.uuid)
                 if port_obj:
                     self.addCleanup(
                         connections.quantum_h.delete_port,

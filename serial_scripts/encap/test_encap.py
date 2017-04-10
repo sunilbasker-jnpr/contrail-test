@@ -121,10 +121,10 @@ class TestEncapCases(base.BaseEncapTest):
                     inputs=self.inputs,
                     connections=self.connections,
                     pool_name=fip_pool_name,
-                    vn_id=fvn_fixture.vn_id))
+                    vn_id=fvn_fixture.uuid))
             assert fip_fixture.verify_on_setup()
             fip_id = fip_fixture.create_and_assoc_fip(
-                fvn_fixture.vn_id, vm1_fixture.vm_id)
+                fvn_fixture.uuid, vm1_fixture.vm_id)
             assert fip_fixture.verify_fip(fip_id, vm1_fixture, fvn_fixture)
             routing_instance = fvn_fixture.ri_name
 
@@ -294,10 +294,10 @@ class TestEncapCases(base.BaseEncapTest):
                     inputs=self.inputs,
                     connections=self.connections,
                     pool_name=fip_pool_name,
-                    vn_id=fvn_fixture.vn_id))
+                    vn_id=fvn_fixture.uuid))
             assert fip_fixture.verify_on_setup()
             fip_id = fip_fixture.create_and_assoc_fip(
-                fvn_fixture.vn_id, vm1_fixture.vm_id)
+                fvn_fixture.uuid, vm1_fixture.vm_id)
             self.addCleanup(fip_fixture.disassoc_and_delete_fip, fip_id)
             assert fip_fixture.verify_fip(fip_id, vm1_fixture, fvn_fixture)
             routing_instance = fvn_fixture.ri_name
@@ -361,14 +361,14 @@ class TestEncapCases(base.BaseEncapTest):
             self.logger.info('Apply policy between VN %s and %s' %
                              (vn1_name, vn2_name))
             vn1_fixture.bind_policies(
-                [policy1_fixture.policy_fq_name], vn1_fixture.vn_id)
+                [policy1_fixture.policy_fq_name], vn1_fixture.uuid)
             self.addCleanup(
-                vn1_fixture.unbind_policies, vn1_fixture.vn_id, [
+                vn1_fixture.unbind_policies, vn1_fixture.uuid, [
                     policy1_fixture.policy_fq_name])
             vn2_fixture.bind_policies(
-                [policy2_fixture.policy_fq_name], vn2_fixture.vn_id)
+                [policy2_fixture.policy_fq_name], vn2_fixture.uuid)
             self.addCleanup(
-                vn2_fixture.unbind_policies, vn2_fixture.vn_id, [
+                vn2_fixture.unbind_policies, vn2_fixture.uuid, [
                     policy2_fixture.policy_fq_name])
             vm1_fixture.wait_till_vm_is_up()
             vm2_fixture.wait_till_vm_is_up()
@@ -527,10 +527,10 @@ class TestEncapCases(base.BaseEncapTest):
                     inputs=self.inputs,
                     connections=self.connections,
                     pool_name=fip_pool_name,
-                    vn_id=fvn_fixture.vn_id))
+                    vn_id=fvn_fixture.uuid))
             assert fip_fixture.verify_on_setup()
             fip_id = fip_fixture.create_and_assoc_fip(
-                fvn_fixture.vn_id, vm1_fixture.vm_id)
+                fvn_fixture.uuid, vm1_fixture.vm_id)
             self.addCleanup(fip_fixture.disassoc_and_delete_fip, fip_id)
             assert fip_fixture.verify_fip(fip_id, vm1_fixture, fvn_fixture)
             routing_instance = fvn_fixture.ri_name
@@ -594,14 +594,14 @@ class TestEncapCases(base.BaseEncapTest):
             self.logger.info('Apply policy between VN %s and %s' %
                              (vn1_name, vn2_name))
             vn1_fixture.bind_policies(
-                [policy1_fixture.policy_fq_name], vn1_fixture.vn_id)
+                [policy1_fixture.policy_fq_name], vn1_fixture.uuid)
             self.addCleanup(
-                vn1_fixture.unbind_policies, vn1_fixture.vn_id, [
+                vn1_fixture.unbind_policies, vn1_fixture.uuid, [
                     policy1_fixture.policy_fq_name])
             vn2_fixture.bind_policies(
-                [policy2_fixture.policy_fq_name], vn2_fixture.vn_id)
+                [policy2_fixture.policy_fq_name], vn2_fixture.uuid)
             self.addCleanup(
-                vn2_fixture.unbind_policies, vn2_fixture.vn_id, [
+                vn2_fixture.unbind_policies, vn2_fixture.uuid, [
                     policy2_fixture.policy_fq_name])
             vm1_fixture.wait_till_vm_is_up()
             vm2_fixture.wait_till_vm_is_up()

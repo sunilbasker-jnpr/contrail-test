@@ -129,10 +129,10 @@ class FloatingipTestSanity_restart(base.FloatingIpBaseTest):
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_name1,
-                vn_id=fvn1_fixture.vn_id))
+                vn_id=fvn1_fixture.uuid))
         assert fip_fixture1.verify_on_setup()
         fip_id1 = fip_fixture1.create_and_assoc_fip(
-            fvn1_fixture.vn_id, fvn2_vm1_fixture.vm_id)
+            fvn1_fixture.uuid, fvn2_vm1_fixture.vm_id)
         self.addCleanup(fip_fixture1.disassoc_and_delete_fip, fip_id1)
         assert fip_fixture1.verify_fip(
             fip_id1, fvn2_vm1_fixture, fvn1_fixture)
@@ -143,10 +143,10 @@ class FloatingipTestSanity_restart(base.FloatingIpBaseTest):
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_name2,
-                vn_id=fvn2_fixture.vn_id))
+                vn_id=fvn2_fixture.uuid))
         assert fip_fixture2.verify_on_setup()
         fip_id2 = fip_fixture2.create_and_assoc_fip(
-            fvn2_fixture.vn_id, fvn1_vm1_fixture.vm_id)
+            fvn2_fixture.uuid, fvn1_vm1_fixture.vm_id)
         self.addCleanup(fip_fixture2.disassoc_and_delete_fip, fip_id2)
         assert fip_fixture2.verify_fip(fip_id2, fvn1_vm1_fixture, fvn2_fixture)
 
@@ -283,11 +283,11 @@ class FloatingipTestSanity_restart(base.FloatingIpBaseTest):
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_name1,
-                vn_id=fvn1_fixture.vn_id))
+                vn_id=fvn1_fixture.uuid))
         assert fip_fixture1.verify_on_setup()
 
         fip_id1 = fip_fixture1.create_and_assoc_fip(
-            fvn1_fixture.vn_id, vn1_vm1_traffic_fixture.vm_id)
+            fvn1_fixture.uuid, vn1_vm1_traffic_fixture.vm_id)
         self.addCleanup(fip_fixture1.disassoc_and_delete_fip, fip_id1)
         assert fip_fixture1.verify_fip(
             fip_id1, vn1_vm1_traffic_fixture, fvn1_fixture)
