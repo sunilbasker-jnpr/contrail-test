@@ -254,7 +254,7 @@ class TestBasicVMVN0(BaseVnVmTest):
             #if (self.inputs.orchestrator == 'vcenter'):
             #    self.vnc_lib.virtual_network_delete(id=vn_obj.uuid)
             #else:
-            self.vnc_lib.virtual_network_delete(id=vn_fixture.vn_id)
+            self.vnc_lib.virtual_network_delete(id=vn_fixture.uuid)
         except RefsExistError as e:
             self.logger.info(
                 'RefsExistError:Check passed that the VN cannot be disassociated/deleted when the VM exists')
@@ -279,10 +279,10 @@ class TestBasicVMVN0(BaseVnVmTest):
         vn_obj1 = self.create_vn()
         assert vn_obj1.verify_on_setup()
 
-        vn_obj2 = self.create_vn(vn_name=vn_obj1.get_name(), subnets=vn_obj1.get_cidrs(af='dual'))
+        vn_obj2 = self.create_vn(vn_name=vn_obj1.name, subnets=vn_obj1.get_cidrs(af='dual'))
         assert vn_obj2.verify_on_setup()
         assert vn_obj2, 'Duplicate VN cannot be created'
-        if (vn_obj1.vn_id == vn_obj2.vn_id):
+        if (vn_obj1.uuid == vn_obj2.uuid):
             self.logger.info('Same obj created')
         else:
             self.logger.error('Different objs created.')
@@ -634,7 +634,7 @@ echo "Hello World.  The time is now $(date -R)!" | tee /tmp/output.txt
         vn2_fixture = self.useFixture(VNFixture(project_name=projects[1],
                                      connections=project_connections2,
                                      inputs=project_inputs2,
-                                     vn_name=vn1_fixture.get_name(),
+                                     vn_name=vn1_fixture.name,
                                      subnets=vn1_fixture.get_cidrs(af='dual')))
         assert vn1_fixture.verify_on_setup()
         assert vn2_fixture.verify_on_setup()
@@ -1490,7 +1490,7 @@ class TestBasicVMVN4(BaseVnVmTest):
         ports = {}
         for subnet in subnet_objects:
             if subnet['cidr'] == vn_subnets[0]:
-                ports['subnet'] = vn_fixture.create_port(vn_fixture.vn_id,
+                ports['subnet'] = vn_fixture.create_port(vn_fixture.uuid,
                     subnet_id=subnet['id'], ip_address=fixed_ip)
         vm_fixture = self.useFixture( VMFixture(project_name=self.inputs.project_name,
                 connections=self.connections, vn_obj=vn_obj, image_name='ubuntu-traffic',
@@ -3071,10 +3071,10 @@ class TestBasicVMVNx(BaseVnVmTest):
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_name,
-                vn_id=fvn_fixture.vn_id))
+                vn_id=fvn_fixture.uuid))
         assert fip_fixture.verify_on_setup()
         fip_id = fip_fixture.create_and_assoc_fip(
-            fvn_fixture.vn_id, vn1_vm1_fixture.vm_id)
+            fvn_fixture.uuid, vn1_vm1_fixture.vm_id)
         self.addCleanup(fip_fixture.disassoc_and_delete_fip, fip_id)
         assert fip_fixture.verify_fip(fip_id, vn1_vm1_fixture, fvn_fixture)
         if not vn1_vm1_fixture.ping_with_certainty(fvn_vm1_fixture.vm_ip):
@@ -3141,7 +3141,7 @@ class TestBasicVMVNx(BaseVnVmTest):
         # Check VMs are in same agent or not. Need to compute next hop
         # accordingly 
         if  self.compute_1 is self.compute_2:
-            vn_fq_name=fvn_fixture.get_vn_fq_name()
+            vn_fq_name=fvn_fixture.fq_name_str
             nh_id=fvn_vm1_fixture.tap_intf[vn_fq_name]['flow_key_idx']
         else:
             nh_id=vn1_vm1_fixture.tap_intf[vn_fq_name]['flow_key_idx']

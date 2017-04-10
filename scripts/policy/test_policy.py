@@ -293,7 +293,7 @@ class TestBasicPolicyConfig(BasePolicyTest):
         policy_fq_name2 = self.quantum_h.get_policy_fq_name(
             policy2_fixture.policy_obj)
         policy_fq_names.append(policy_fq_name2)
-        vn1_fixture.bind_policies(policy_fq_names, vn1_fixture.vn_id)
+        vn1_fixture.bind_policies(policy_fq_names, vn1_fixture.uuid)
 
         vna_acl2 = inspect_h.get_vna_acl_by_vn(vn_fq_name)
         out = policy_test_utils.compare_args(
@@ -345,9 +345,9 @@ class TestBasicPolicyConfig(BasePolicyTest):
                 policy_name=policy_name, rules_list=rules, inputs=self.inputs,
                 connections=self.connections))
         vn1_fixture.bind_policies(
-            [policy_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy_fixture.policy_fq_name], vn1_fixture.uuid)
         self.addCleanup(vn1_fixture.unbind_policies,
-                        vn1_fixture.vn_id, [policy_fixture.policy_fq_name])
+                        vn1_fixture.uuid, [policy_fixture.policy_fq_name])
         err_msg_on_pass = 'Ping from %s to %s passed,expected it to Fail' % (
                                         vm1_fixture.vm_name,vm2_fixture.vm_name)
         err_msg_on_fail = 'Ping from %s to %s failed,expected it to Pass' % (
@@ -517,16 +517,10 @@ class TestBasicPolicyRouting(BasePolicyTest):
             "TEST STEP: Bind policys to VN and verify import and export RT values")
         policy_fq_name1 = [policy1_fixture.policy_fq_name]
         policy_fq_name2 = [policy2_fixture.policy_fq_name]
-        vn1_fixture.bind_policies(policy_fq_name1, vn1_fixture.vn_id)
-        vn1_pol = vn1_fixture.get_policy_attached_to_vn()
-        vn2_fixture.bind_policies(policy_fq_name2, vn2_fixture.vn_id)
-        vn2_pol = vn2_fixture.get_policy_attached_to_vn()
+        vn1_fixture.bind_policies(policy_fq_name1, vn1_fixture.uuid)
+        vn2_fixture.bind_policies(policy_fq_name2, vn2_fixture.uuid)
         vn3_fixture.bind_policies(
-            [policy3_fixture.policy_fq_name], vn3_fixture.vn_id)
-        vn3_pol = vn3_fixture.get_policy_attached_to_vn()
-        self.logger.info("vn: %s policys: %s" % (vn1_name, vn1_pol))
-        self.logger.info("vn: %s policys: %s" % (vn2_name, vn2_pol))
-        self.logger.info("vn: %s policys: %s" % (vn3_name, vn3_pol))
+            [policy3_fixture.policy_fq_name], vn3_fixture.uuid)
 
         actual_peer_vns_by_policy = policy_test_utils.get_policy_peer_vns(
             self,
@@ -549,7 +543,7 @@ class TestBasicPolicyRouting(BasePolicyTest):
         self.logger.info(
             "TEST STEP: Bind one more policy to VN and verify RT import values updated")
         vn1_fixture.bind_policies(
-            [policy1_fixture.policy_fq_name, policy4_fixture.policy_fq_name], vn1_fixture.vn_id)
+            [policy1_fixture.policy_fq_name, policy4_fixture.policy_fq_name], vn1_fixture.uuid)
 
         actual_peer_vns_by_policy = policy_test_utils.get_policy_peer_vns(
             self,
@@ -564,10 +558,10 @@ class TestBasicPolicyRouting(BasePolicyTest):
         self.logger.info(
             "TEST STEP: Unbind policy which was added earlier and verify RT import/export values are updated accordingly")
         vn1_fixture.unbind_policies(
-            vn1_fixture.vn_id, [
+            vn1_fixture.uuid, [
                 policy4_fixture.policy_fq_name])
         vn3_fixture.unbind_policies(
-            vn3_fixture.vn_id, [
+            vn3_fixture.uuid, [
                 policy3_fixture.policy_fq_name])
 
         actual_peer_vns_by_policy = policy_test_utils.get_policy_peer_vns(

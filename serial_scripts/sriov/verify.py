@@ -60,13 +60,13 @@ class VerifySriovCases():
         subnet2_objects = vn3_fixture.get_subnets()
         ports1 = {}
         ports2 = {}
-        ports1['subnet1'] = vn1_fixture.create_port(vn1_fixture.vn_id,
+        ports1['subnet1'] = vn1_fixture.create_port(vn1_fixture.uuid,
                     subnet_id=subnet1_objects[0]['id'], ip_address=vm1_sriov_ip, sriov=True)
-        ports1['subnet2'] = vn3_fixture.create_port(vn3_fixture.vn_id,
+        ports1['subnet2'] = vn3_fixture.create_port(vn3_fixture.uuid,
                     subnet_id=subnet2_objects[0]['id'],ip_address=vm1_mgmt_ip)
-        ports2['subnet1'] = vn1_fixture.create_port(vn1_fixture.vn_id,
+        ports2['subnet1'] = vn1_fixture.create_port(vn1_fixture.uuid,
                     subnet_id=subnet1_objects[0]['id'], ip_address=vm2_sriov_ip, sriov=True)
-        ports2['subnet2'] = vn3_fixture.create_port(vn3_fixture.vn_id,
+        ports2['subnet2'] = vn3_fixture.create_port(vn3_fixture.uuid,
                     subnet_id=subnet2_objects[0]['id'],ip_address=vm2_mgmt_ip)
 
         vm1_fixture = self.useFixture(
@@ -161,9 +161,9 @@ class VerifySriovCases():
 
         vm_fixture_list=[]
         for x in xrange(0, total_vf):
-            ports1=vn1_fixture.create_port(vn1_fixture.vn_id,
+            ports1=vn1_fixture.create_port(vn1_fixture.uuid,
                     subnet_id=subnet1_objects[0]['id'], ip_address=vm1_sriov_ip, sriov=True)
-            ports2=vn3_fixture.create_port(vn3_fixture.vn_id,
+            ports2=vn3_fixture.create_port(vn3_fixture.uuid,
                     subnet_id=subnet2_objects[0]['id'],ip_address=vm1_mgmt_ip)
 
             sriov_vm1_name = 'SRIOV_VM-' + str(x)
@@ -185,9 +185,9 @@ class VerifySriovCases():
             assert vm_fixture_list[x].wait_till_vm_is_up()
         self.logger.info(
                 'Further VM launch should fail  on compute %s. Max number of VF utilized' % (compute_1))
-        ports1=vn1_fixture.create_port(vn1_fixture.vn_id,
+        ports1=vn1_fixture.create_port(vn1_fixture.uuid,
                     subnet_id=subnet1_objects[0]['id'], ip_address=vm1_sriov_ip, sriov=True)
-        ports2=vn3_fixture.create_port(vn3_fixture.vn_id,
+        ports2=vn3_fixture.create_port(vn3_fixture.uuid,
                     subnet_id=subnet2_objects[0]['id'],ip_address=vm1_mgmt_ip)
         
         vm_fixture_error=self.useFixture(
@@ -216,9 +216,9 @@ class VerifySriovCases():
                 'VM launch should be successful now  on compute %s. Max number of VF utilized' % (compute_1))
         vm1_sriov_ip=self.ip_increment(vm1_sriov_ip,1)
         vm1_mgmt_ip=self.ip_increment(vm1_mgmt_ip,1)
-        ports1=vn1_fixture.create_port(vn1_fixture.vn_id,
+        ports1=vn1_fixture.create_port(vn1_fixture.uuid,
                     subnet_id=subnet1_objects[0]['id'], ip_address=vm1_sriov_ip, sriov=True)
-        ports2=vn3_fixture.create_port(vn3_fixture.vn_id,
+        ports2=vn3_fixture.create_port(vn3_fixture.uuid,
                     subnet_id=subnet2_objects[0]['id'],ip_address=vm1_mgmt_ip)
 
         vm_fixture_new=self.useFixture(
@@ -298,13 +298,13 @@ class VerifySriovCases():
         subnet2_objects = vn3_fixture.get_subnets()
         ports1 = {}
         ports2 = {}
-        ports1['subnet1'] = vn1_fixture.create_port(vn1_fixture.vn_id,
+        ports1['subnet1'] = vn1_fixture.create_port(vn1_fixture.uuid,
                     subnet_id=subnet1_objects[0]['id'], ip_address=vm1_sriov_ip, sriov=True)
-        ports1['subnet2'] = vn3_fixture.create_port(vn3_fixture.vn_id,
+        ports1['subnet2'] = vn3_fixture.create_port(vn3_fixture.uuid,
                     subnet_id=subnet2_objects[0]['id'],ip_address=vm1_mgmt_ip)
-        ports2['subnet1'] = vn1_fixture.create_port(vn1_fixture.vn_id,
+        ports2['subnet1'] = vn1_fixture.create_port(vn1_fixture.uuid,
                     subnet_id=subnet1_objects[0]['id'], ip_address=vm2_sriov_ip, sriov=True)
-        ports2['subnet2'] = vn3_fixture.create_port(vn3_fixture.vn_id,
+        ports2['subnet2'] = vn3_fixture.create_port(vn3_fixture.uuid,
                     subnet_id=subnet2_objects[0]['id'],ip_address=vm2_mgmt_ip)
 
         vm1_fixture = self.useFixture(

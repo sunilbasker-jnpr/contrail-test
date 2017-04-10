@@ -63,12 +63,12 @@ class VerifyVgwCases():
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_name,
-                vn_id=self.vn_fixture_dict[0].vn_id))
+                vn_id=self.vn_fixture_dict[0].uuid))
         assert fip_fixture.verify_on_setup()
 
         # FIP pool association and validation
         fip_id = fip_fixture.create_and_assoc_fip(
-            self.vn_fixture_dict[0].vn_id, vm1_fixture.vm_id)
+            self.vn_fixture_dict[0].uuid, vm1_fixture.vm_id)
         assert fip_fixture.verify_fip(
             fip_id, vm1_fixture, self.vn_fixture_dict[0])
         self.addCleanup(fip_fixture.disassoc_and_delete_fip, fip_id)
@@ -184,12 +184,12 @@ class VerifyVgwCases():
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_name,
-                vn_id=vn_fixture.vn_id))
+                vn_id=vn_fixture.uuid))
         assert fip_fixture.verify_on_setup()
 
         # FIP pool association and validation
         fip_id = fip_fixture.create_and_assoc_fip(
-            vn_fixture.vn_id, vm1_fixture.vm_id)
+            vn_fixture.uuid, vm1_fixture.vm_id)
         assert fip_fixture.verify_fip(fip_id, vm1_fixture, vn_fixture)
         self.addCleanup(fip_fixture.disassoc_and_delete_fip, fip_id)
 
@@ -255,12 +255,12 @@ class VerifyVgwCases():
                 inputs=self.inputs,
                 connections=self.connections,
                 pool_name=fip_pool_name,
-                vn_id=self.vn_fixture_dict[0].vn_id))
+                vn_id=self.vn_fixture_dict[0].uuid))
         assert fip_fixture.verify_on_setup()
 
         # FIP pool association and validation
         fip_id = fip_fixture.create_and_assoc_fip(
-            self.vn_fixture_dict[0].vn_id, vm1_fixture.vm_id)
+            self.vn_fixture_dict[0].uuid, vm1_fixture.vm_id)
         assert fip_fixture.verify_fip(
             fip_id, vm1_fixture, self.vn_fixture_dict[0])
         self.addCleanup(fip_fixture.disassoc_and_delete_fip, fip_id)

@@ -1,5 +1,4 @@
 from tcutils.wrappers import preposttest_wrapper
-from vn_test import MultipleVNFixture
 from vm_test import MultipleVMFixture
 from base import XmppBase
 from common.policy.config import ConfigPolicy

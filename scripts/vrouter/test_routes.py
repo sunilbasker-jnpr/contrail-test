@@ -48,7 +48,7 @@ class TestRoutes(BaseVrouterTest):
         vn1_name = get_random_name()
         vn1_subnets = [get_random_cidr()]
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets)
-        port1_fixture = self.setup_vmi(vn1_fixture.vn_id)
+        port1_fixture = self.setup_vmi(vn1_fixture.uuid)
 
         compute_1 = self.connections.orch.get_hosts()[0]
         compute_2 = self.connections.orch.get_hosts()[1]
@@ -100,13 +100,13 @@ class TestRoutes(BaseVrouterTest):
         vm3_ip = '8.1.20.1/16'
         unknown_ip = '8.1.1.10/16'
 
-        port1_fixture = self.setup_vmi(vn1_fixture.vn_id,
+        port1_fixture = self.setup_vmi(vn1_fixture.uuid,
                 fixed_ips=[{'subnet_id':vn_subnet_id,
                             'ip_address': vm1_ip.split('/')[0]}])
-        port2_fixture = self.setup_vmi(vn1_fixture.vn_id,
+        port2_fixture = self.setup_vmi(vn1_fixture.uuid,
                 fixed_ips=[{'subnet_id':vn_subnet_id,
                             'ip_address': vm2_ip.split('/')[0]}])
-        port3_fixture = self.setup_vmi(vn1_fixture.vn_id,
+        port3_fixture = self.setup_vmi(vn1_fixture.uuid,
                 fixed_ips=[{'subnet_id':vn_subnet_id,
                             'ip_address': vm3_ip.split('/')[0]}])
 
@@ -186,10 +186,10 @@ class TestRoutes(BaseVrouterTest):
         vm3_ip = '10.1.2.10'
         prefix_ip = '10.1.2.0'
         prefix = '%s/24' %(prefix_ip)
-        port2_fixture = self.setup_vmi(vn1_fixture.vn_id,
+        port2_fixture = self.setup_vmi(vn1_fixture.uuid,
                 fixed_ips=[{'subnet_id':vn_subnet_id,
                             'ip_address': vm2_ip.split('/')[0]}])
-        port3_fixture = self.setup_vmi(vn1_fixture.vn_id,
+        port3_fixture = self.setup_vmi(vn1_fixture.uuid,
                 fixed_ips=[{'subnet_id':vn_subnet_id,
                             'ip_address': vm3_ip.split('/')[0]}])
         vm1_fixture = self.create_vm(vn1_fixture,
@@ -252,7 +252,7 @@ class TestRoutes(BaseVrouterTest):
         vn_subnet_id = vn1_fixture.vn_subnet_objs[0]['id']
         vm2_ip = get_random_ip(vn1_subnets[0])
 
-        port2_fixture = self.setup_vmi(vn1_fixture.vn_id,
+        port2_fixture = self.setup_vmi(vn1_fixture.uuid,
                 fixed_ips=[{'subnet_id':vn_subnet_id,
                             'ip_address': vm2_ip.split('/')[0]}])
         vm1_fixture = self.create_vm(vn1_fixture,

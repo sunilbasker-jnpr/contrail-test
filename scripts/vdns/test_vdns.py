@@ -493,10 +493,10 @@ class TestvDNS0(BasevDNSTest):
         fip_fixture1 = self.useFixture(
             FloatingIPFixture(
                 project_name=self.inputs.project_name, inputs=self.inputs,
-                connections=self.connections, pool_name=fip_pool_name1, vn_id=vn_fixt['vm2-test'].vn_id))
+                connections=self.connections, pool_name=fip_pool_name1, vn_id=vn_fixt['vm2-test'].uuid))
         assert fip_fixture1.verify_on_setup()
         fip_id1 = fip_fixture1.create_and_assoc_fip(
-            vn_fixt['vm2-test'].vn_id, vm_fixture['vm1-test'].vm_id)
+            vn_fixt['vm2-test'].uuid, vm_fixture['vm1-test'].vm_id)
         self.addCleanup(fip_fixture1.disassoc_and_delete_fip, fip_id1)
         assert fip_fixture1.verify_fip(
             fip_id1, vm_fixture['vm1-test'], vn_fixt['vm2-test'])
@@ -671,10 +671,10 @@ class TestvDNS0(BasevDNSTest):
         fip_fixture = self.useFixture(
             FloatingIPFixture(
                 project_name=self.inputs.project_name, inputs=self.inputs,
-                connections=self.connections, pool_name=fip_pool_name, vn_id=fvn_fixture.vn_id))
+                connections=self.connections, pool_name=fip_pool_name, vn_id=fvn_fixture.uuid))
         assert fip_fixture.verify_on_setup()
         fip_id = fip_fixture.create_and_assoc_fip(
-            fvn_fixture.vn_id, vm_fix.vm_id)
+            fvn_fixture.uuid, vm_fix.vm_id)
         self.addCleanup(fip_fixture.disassoc_and_delete_fip, fip_id)
         assert fip_fixture.verify_fip(fip_id, vm_fix, fvn_fixture)
         routing_instance = fvn_fixture.ri_name

@@ -48,7 +48,7 @@ class TestPorts(BaseNeutronTest):
         vn1_vm1_name = get_random_name('vn1-vm1')
         vn1_vm2_name = get_random_name('vn1-vm2')
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets)
-        port_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
                                      image_name='ubuntu-traffic',
                                      port_ids=[port_obj['id']])
@@ -81,7 +81,7 @@ class TestPorts(BaseNeutronTest):
             self.logger.info('Unable to ping to a detached port.. OK')
 
         # Now attach the interface again
-        port_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture.interface_attach(port_id=port_obj['id'])
         time.sleep(5)
         vm1_fixture.vm_obj.get()
@@ -114,9 +114,9 @@ class TestPorts(BaseNeutronTest):
         vn1_fixture = self.create_vn(vn1_name, [vn1_subnet_1, vn1_subnet_2])
         vn1_subnet1_id = vn1_fixture.vn_subnet_objs[0]['id']
         vn1_subnet2_id = vn1_fixture.vn_subnet_objs[1]['id']
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      fixed_ips=[{'subnet_id': vn1_subnet1_id}])
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      fixed_ips=[{'subnet_id': vn1_subnet2_id}])
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
                                      image_name='cirros',
@@ -162,10 +162,10 @@ class TestPorts(BaseNeutronTest):
         vn1_subnet2_id = vn1_fixture.vn_subnet_objs[1]['id']
         vn1_subnet1_ip = get_an_ip(vn1_fixture.vn_subnet_objs[0]['cidr'], 5)
         vn1_subnet2_ip = get_an_ip(vn1_fixture.vn_subnet_objs[1]['cidr'], 5)
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      fixed_ips=[{'subnet_id': vn1_subnet1_id,
                                                  'ip_address': vn1_subnet1_ip}])
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      fixed_ips=[{'subnet_id': vn1_subnet2_id,
                                                  'ip_address': vn1_subnet2_ip}])
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
@@ -207,7 +207,7 @@ class TestPorts(BaseNeutronTest):
         vn1_subnet2_ip = get_an_ip(vn1_fixture.vn_subnet_objs[1]['cidr'], 5)
         vn1_subnet1_ip2 = get_an_ip(vn1_fixture.vn_subnet_objs[0]['cidr'], 15)
         vn1_subnet2_ip2 = get_an_ip(vn1_fixture.vn_subnet_objs[1]['cidr'], 15)
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      fixed_ips=[{'subnet_id': vn1_subnet1_id,
                                                  'ip_address': vn1_subnet1_ip}, {'subnet_id': vn1_subnet2_id, 'ip_address': vn1_subnet2_ip}])
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
@@ -237,7 +237,7 @@ class TestPorts(BaseNeutronTest):
                 'Ping between VMs %s, %s passed.Expected to fail' % (ip,
                                                                      test_vm_fixture.vm_ip)
         self.logger.info('Will re-attach the VM and the port and check ping')
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      fixed_ips=[{'subnet_id': vn1_subnet1_id,
                                                  'ip_address': vn1_subnet1_ip2}, {'subnet_id': vn1_subnet2_id, 'ip_address': vn1_subnet2_ip2}])
         vm1_fixture.clear_vmi_info()
@@ -272,9 +272,9 @@ class TestPorts(BaseNeutronTest):
         vm1_mac = '00:00:00:00:00:01'
         vm2_mac = '00:00:00:00:00:02'
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      mac_address=vm1_mac)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      mac_address=vm2_mac)
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
                                      image_name='cirros',
@@ -310,9 +310,9 @@ class TestPorts(BaseNeutronTest):
         vn1_vm2_name = get_random_name('vn1-vm2')
         vn1_fixture = self.create_vn(vn1_name, [vn1_subnet_1])
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      no_security_group=True)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
                                      image_name='cirros',
                                      port_ids=[port1_obj['id']])
@@ -346,9 +346,9 @@ class TestPorts(BaseNeutronTest):
 
         sg1 = self.create_security_group(get_random_name('sg1'))
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      security_groups=[sg1['id']])
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
                                      image_name='cirros',
                                      port_ids=[port1_obj['id']])
@@ -384,9 +384,9 @@ class TestPorts(BaseNeutronTest):
 
         dns_ip = get_random_ip(get_random_cidr())
         extra_dhcp_opts = [{'opt_name': '6', 'opt_value': dns_ip}]
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id,
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid,
                                      extra_dhcp_opts=extra_dhcp_opts)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
                                      port_ids=[port1_obj['id']])
         vm2_fixture = self.create_vm(vn1_fixture, vn1_vm2_name,
@@ -433,9 +433,9 @@ class TestPorts(BaseNeutronTest):
         vn1_vm1_name = get_random_name('vn1-vm1')
         vn1_fixture = self.create_vn(vn1_name, [vn1_subnet_1])
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
         self.delete_port(port1_obj['id'])
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         port1_ip = port1_obj['fixed_ips'][0]['ip_address']
         port2_ip = port2_obj['fixed_ips'][0]['ip_address']
         assert port1_ip == port2_ip,\
@@ -452,7 +452,7 @@ class TestPorts(BaseNeutronTest):
         vn1_name = get_random_name('vn1')
         vn1_subnet = get_random_cidr()
         vn1_fixture = self.create_vn(vn1_name, [vn1_subnet])
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
         port_dict = {'name': "test_port"}
         port_rsp = self.quantum_h.update_port(port1_obj['id'], port_dict)
         assert port_rsp['port'][
@@ -468,7 +468,7 @@ class TestPorts(BaseNeutronTest):
         vn1_vm1_name = get_random_name('vn1-vm1')
         vn1_vm2_name = get_random_name('vn1-vm2')
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets)
-        port_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
                                      image_name='cirros',
                                      port_ids=[port_obj['id']])
@@ -508,8 +508,8 @@ class TestPorts(BaseNeutronTest):
 
         sg1 = self.create_security_group(get_random_name('sg1'))
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vn1_vm1_name,
                                      image_name='cirros',
                                      port_ids=[port1_obj['id']])
@@ -547,7 +547,7 @@ class TestPorts(BaseNeutronTest):
         vn1_vm1_name = get_random_name('vn1-vm1')
         vn1_fixture = self.create_vn(vn1_name, [vn1_subnet_1])
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
         assert port1_obj['device_id'] == '', \
             "Port %s has device id not set to null on creation" % (port1_obj)
         assert port1_obj['device_owner'] ==  '', \
@@ -703,8 +703,8 @@ class TestPorts(BaseNeutronTest):
 
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets)
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vm1_name,
                                      image_name='ubuntu-traffic',
                                      port_ids=[port1_obj['id']])
@@ -788,13 +788,13 @@ class TestPorts(BaseNeutronTest):
         vn2_fixture = self.create_vn(vn2_name, vn2_subnets)
         vn_objs = [public_vn_fixture.obj, vn1_fixture.obj, vn2_fixture.obj]
 
-        lvn_port_obj1 = self.create_port(net_id=vn1_fixture.vn_id)
-        rvn_port_obj1 = self.create_port(net_id=vn2_fixture.vn_id)
-        mvn_port_obj1 = self.create_port(net_id=public_vn_fixture.vn_id)
+        lvn_port_obj1 = self.create_port(net_id=vn1_fixture.uuid)
+        rvn_port_obj1 = self.create_port(net_id=vn2_fixture.uuid)
+        mvn_port_obj1 = self.create_port(net_id=public_vn_fixture.uuid)
 
-        lvn_port_obj2 = self.create_port(net_id=vn1_fixture.vn_id)
-        rvn_port_obj2 = self.create_port(net_id=vn2_fixture.vn_id)
-        mvn_port_obj2 = self.create_port(net_id=public_vn_fixture.vn_id)
+        lvn_port_obj2 = self.create_port(net_id=vn1_fixture.uuid)
+        rvn_port_obj2 = self.create_port(net_id=vn2_fixture.uuid)
+        mvn_port_obj2 = self.create_port(net_id=public_vn_fixture.uuid)
 
         port_ids1 = [
             mvn_port_obj1['id'], lvn_port_obj1['id'], rvn_port_obj1['id']]
@@ -826,11 +826,11 @@ class TestPorts(BaseNeutronTest):
         fip_pool_name = 'some-pool1'
         my_fip_name = 'fip'
         fvn_obj = fvn_fixture.obj
-        fvn_id = fvn_fixture.vn_id
+        fvn_id = fvn_fixture.uuid
         fip_fixture = self.useFixture(
             FloatingIPFixture(
                 project_name=self.inputs.project_name, inputs=self.inputs,
-                connections=self.connections, pool_name=fip_pool_name, vn_id=fvn_fixture.vn_id))
+                connections=self.connections, pool_name=fip_pool_name, vn_id=fvn_fixture.uuid))
         assert fip_fixture.verify_on_setup()
         fIP = self.create_fip(fip_fixture)
         self.addCleanup(self.del_fip, fIP[1])
@@ -895,8 +895,8 @@ class TestPorts(BaseNeutronTest):
 
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets)
 
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vm1_name,
                                      image_name='ubuntu-traffic',
                                      port_ids=[port1_obj['id']])
@@ -945,7 +945,7 @@ class TestPorts(BaseNeutronTest):
         vn1_name = get_random_name('vn1')
         vm1_name = get_random_name('vm1')
         vn1_fixture = self.create_vn(vn1_name)
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
         vm1_fixture = self.create_vm(vn1_fixture, vm1_name,
                                      image_name='ubuntu-traffic',
                                      port_ids=[port1_obj['id']])
@@ -985,8 +985,8 @@ class TestPorts(BaseNeutronTest):
         result = False
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets)
         vIP = get_an_ip(vn1_subnets[0], offset=10)
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         port_list = [port1_obj, port2_obj]
         vm1_fixture = self.create_vm(vn1_fixture, vm1_name,
                                      image_name='ubuntu-traffic',
@@ -1047,8 +1047,8 @@ class TestPorts(BaseNeutronTest):
 
         vn1_fixture = self.create_vn(vn1_name, vn1_subnets)
         vIP = get_an_ip(vn1_subnets[0], offset=10)
-        port1_obj = self.create_port(net_id=vn1_fixture.vn_id)
-        port2_obj = self.create_port(net_id=vn1_fixture.vn_id)
+        port1_obj = self.create_port(net_id=vn1_fixture.uuid)
+        port2_obj = self.create_port(net_id=vn1_fixture.uuid)
         port_list = [port1_obj, port2_obj]
         vm1_fixture = self.create_vm(vn1_fixture, vm1_name,
                                      image_name='ubuntu-keepalive',

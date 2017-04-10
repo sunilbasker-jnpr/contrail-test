@@ -88,25 +88,25 @@ def get_flow_data(
     src_vm_node_ip = src_vm_fixture.vm_ip
     dst_vm_node_ip = dst_vm_fixture.vm_ip
     src_vrf = src_vm_fixture.get_vrf_id(
-        src_vm_vn_fixt.vn_fq_name,
+        src_vm_vn_fixt.fq_name_str,
         src_vm_vn_fixt.vrf_name)
     if src_vm_fixture.vm_node_ip == dst_vm_fixture.vm_node_ip:
         dst_vrf = src_vm_fixture.get_vrf_id(
-            dst_vm_vn_fixt.vn_fq_name,
+            dst_vm_vn_fixt.fq_name_str,
             dst_vm_vn_fixt.vrf_name)
     else:
         dst_vrf = dst_vm_fixture.get_vrf_id(
-            dst_vm_vn_fixt.vn_fq_name,
+            dst_vm_vn_fixt.fq_name_str,
             dst_vm_vn_fixt.vrf_name)
     fip_flow = False
     src_vm_in_dst_vn_fip = src_vm_fixture.chk_vmi_for_fip(
-        dst_vm_vn_fixt.vn_fq_name)
+        dst_vm_vn_fixt.fq_name_str)
     if src_vm_in_dst_vn_fip is not None:
         fip_flow = True
     if fip_flow:
         # For FIP case, always get dst_vrf from src node
         dst_vrf = src_vm_fixture.get_vrf_id(
-            dst_vm_vn_fixt.vn_fq_name,
+            dst_vm_vn_fixt.fq_name_str,
             dst_vm_vn_fixt.vrf_name)
         # inter-VN, connected by fip scenario, vrf trnslation happens only in
         # this case

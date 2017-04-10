@@ -99,13 +99,13 @@ class BaseResource(VerifySvcChain, BaseTestLbaas, BaseNeutronTest):
 
         policy_fq_name = [self.policy_fixture.policy_fq_name]
         self.vn11_fixture.bind_policies(
-            policy_fq_name, self.vn11_fixture.vn_id)
+            policy_fq_name, self.vn11_fixture.uuid)
         self.addCleanup(self.vn11_fixture.unbind_policies,
-                        self.vn11_fixture.vn_id, [self.policy_fixture.policy_fq_name])
+                        self.vn11_fixture.uuid, [self.policy_fixture.policy_fq_name])
         self.vn22_fixture.bind_policies(
-            policy_fq_name, self.vn22_fixture.vn_id)
+            policy_fq_name, self.vn22_fixture.uuid)
         self.addCleanup(self.vn22_fixture.unbind_policies,
-                        self.vn22_fixture.vn_id, [self.policy_fixture.policy_fq_name])
+                        self.vn22_fixture.uuid, [self.policy_fixture.policy_fq_name])
 
         # Adding Floating ip ###
 
@@ -115,12 +115,12 @@ class BaseResource(VerifySvcChain, BaseTestLbaas, BaseNeutronTest):
         self.fip_fixture = self.useFixture(
             FloatingIPFixture(
                 project_name=self.inputs.project_name, inputs=self.inputs,
-                connections=self.connections, pool_name=fip_pool_name, vn_id=self.fvn_fixture.vn_id))
+                connections=self.connections, pool_name=fip_pool_name, vn_id=self.fvn_fixture.uuid))
 
         self.vn11_vm1_fixture.verify_on_setup()
         self.vn11_vm1_fixture.wait_till_vm_is_up()
         self.fip_id = self.fip_fixture.create_and_assoc_fip(
-            self.fvn_fixture.vn_id, self.vn11_vm1_fixture.vm_id)
+            self.fvn_fixture.uuid, self.vn11_vm1_fixture.vm_id)
         self.addCleanup(self.fip_fixture.disassoc_and_delete_fip, self.fip_id)
         assert self.fip_fixture.verify_fip(
             self.fip_id, self.vn11_vm1_fixture, self.fvn_fixture)
@@ -128,7 +128,7 @@ class BaseResource(VerifySvcChain, BaseTestLbaas, BaseNeutronTest):
         self.vn22_vm1_fixture.verify_on_setup()
         self.vn22_vm1_fixture.wait_till_vm_is_up()
         self.fip_id1 = self.fip_fixture.create_and_assoc_fip(
-            self.fvn_fixture.vn_id, self.vn22_vm1_fixture.vm_id)
+            self.fvn_fixture.uuid, self.vn22_vm1_fixture.vm_id)
         assert self.fip_fixture.verify_fip(
             self.fip_id1, self.vn22_vm1_fixture, self.fvn_fixture)
         self.addCleanup(self.fip_fixture.disassoc_and_delete_fip, self.fip_id1)
@@ -353,17 +353,17 @@ class VerifyFeatureTestCases(ConfigSecGroup):
         self.fip_fixture1 = self.useFixture(
             FloatingIPFixture(
                 project_name=self.inputs.project_name, inputs=self.inputs,
-                connections=self.connections, pool_name=fip_pool_name, vn_id=self.res.vn11_fixture.vn_id))
+                connections=self.connections, pool_name=fip_pool_name, vn_id=self.res.vn11_fixture.uuid))
 
         self.fip_new_id = self.fip_fixture1.create_and_assoc_fip(
-            self.res.vn11_fixture.vn_id, self.vm22_fixture.vm_id)
+            self.res.vn11_fixture.uuid, self.vm22_fixture.vm_id)
         assert self.fip_fixture1.verify_fip(
             self.fip_new_id, self.vm22_fixture, self.res.vn11_fixture)
         self.addCleanup(self.fip_fixture1.disassoc_and_delete_fip,
                         self.fip_new_id)
 
         self.fip_new_id1 = self.fip_fixture1.create_and_assoc_fip(
-            self.res.vn11_fixture.vn_id, self.vm33_fixture.vm_id)
+            self.res.vn11_fixture.uuid, self.vm33_fixture.vm_id)
         assert self.fip_fixture1.verify_fip(
             self.fip_new_id1, self.vm33_fixture, self.res.vn11_fixture)
         self.addCleanup(self.fip_fixture1.disassoc_and_delete_fip,
@@ -407,12 +407,12 @@ class VerifyFeatureTestCases(ConfigSecGroup):
                 connections=self.connections))
 
         policy_fq_name = [policy_fixture1.policy_fq_name]
-        newvn_fixture.bind_policies(policy_fq_name, newvn_fixture.vn_id)
+        newvn_fixture.bind_policies(policy_fq_name, newvn_fixture.uuid)
         self.addCleanup(newvn_fixture.unbind_policies,
-                        newvn_fixture.vn_id, [policy_fixture1.policy_fq_name])
-        newvn11_fixture.bind_policies(policy_fq_name, newvn11_fixture.vn_id)
+                        newvn_fixture.uuid, [policy_fixture1.policy_fq_name])
+        newvn11_fixture.bind_policies(policy_fq_name, newvn11_fixture.uuid)
         self.addCleanup(newvn11_fixture.unbind_policies,
-                        newvn11_fixture.vn_id, [policy_fixture1.policy_fq_name])
+                        newvn11_fixture.uuid, [policy_fixture1.policy_fq_name])
 
         assert newvn_fixture.verify_on_setup()
         assert newvn11_fixture.verify_on_setup()

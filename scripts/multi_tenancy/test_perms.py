@@ -950,7 +950,7 @@ class TestMultitenancy(BaseMultitenancyTest):
         try:
             self.logger.info("trying to read vn %s as user %s" %
                              (vn_api_obj.get_fq_name_str(), user1))
-            obj = vnc_lib_test1.virtual_network_read(id=vn_obj.vn_id)
+            obj = vnc_lib_test1.virtual_network_read(id=vn_obj.uuid)
             self.logger.error(
                 'Succeeded in reading vn ... should have failed !')
             testfail += 1
@@ -961,7 +961,7 @@ class TestMultitenancy(BaseMultitenancyTest):
         try:
             self.logger.info("trying to read vn %s as user %s" %
                              (vn_api_obj.get_fq_name_str(), user))
-            obj = vnc_lib_test.virtual_network_read(id=vn_obj.vn_id)
+            obj = vnc_lib_test.virtual_network_read(id=vn_obj.uuid)
             self.logger.info('Succeeded in reading vn ... !')
             testpass += 1
         except PermissionDenied as e:

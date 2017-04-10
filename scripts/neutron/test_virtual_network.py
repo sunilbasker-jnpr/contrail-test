@@ -38,12 +38,12 @@ class TestVirtualNetwork(BaseNeutronTest):
         body = {'name': "test_network"}
         net_dict = {'network': body}
         net_rsp = self.quantum_h.update_network(
-            vn1_fixture.vn_id,
+            vn1_fixture.uuid,
             net_dict)
         assert net_rsp['network'][
             'name'] == "test_network", 'Failed to update network name'
         vn_dict = self.api_s_inspect.get_cs_vn_by_id(
-            vn_id=vn1_fixture.vn_id, refresh=True)
+            vn_id=vn1_fixture.uuid, refresh=True)
         assert vn_dict[
             'virtual-network']['display_name'] == "test_network", 'New name of VN is not reflected in API Server'
 
@@ -68,7 +68,7 @@ class TestVirtualNetwork(BaseNeutronTest):
         body = {'admin_state_up': False}
         net_dict = {'network': body}
         net_rsp = self.quantum_h.update_network(
-            vn1_fixture.vn_id,
+            vn1_fixture.uuid,
             net_dict)
         assert net_rsp['network'][
             'admin_state_up'] == False, 'Failed to update admin_state_up'
@@ -77,7 +77,7 @@ class TestVirtualNetwork(BaseNeutronTest):
         body = {'admin_state_up': True}
         net_dict = {'network': body}
         net_rsp = self.quantum_h.update_network(
-            vn1_fixture.vn_id,
+            vn1_fixture.uuid,
             net_dict)
         assert net_rsp['network'][
             'admin_state_up'], 'Failed to update admin_state_up'

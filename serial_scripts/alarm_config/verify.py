@@ -40,7 +40,7 @@ class VerifyAlarms():
 
     def delete_and_verify_vn_acl_config(self, vn_pol_dict):
         vn_pol_dict['vn_fixture'].unbind_policies(
-            vn_pol_dict['vn_fixture'].vn_id)
+            vn_pol_dict['vn_fixture'].uuid)
         sleep(10)
         alarm_fq_name = vn_pol_dict['alarm_fix'].alarm_fq_name
         vn_fq_name = vn_pol_dict['vn_fixture'].vn_fq_name
